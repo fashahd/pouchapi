@@ -83,6 +83,14 @@ class Disbursement extends REST_Controller {
 			], REST_Controller::HTTP_BAD_REQUEST);
 			return;
 		}
+		$cek_external_id = $this->ModelDisbursement->cek_external_id($external_id);
+		if($cek_external_id != "unexisted"){
+			$this->response([
+				'status' => FALSE,
+				'message' => 'DUPLICATE_TRANSACTION'
+			], REST_Controller::HTTP_BAD_REQUEST);
+			return;
+		}
 
 		$data 		= array($external_id,$amount,$bank_code,$account_name,$account_number,$description,$user_id,$company_id);
 		$response	= $this->ModelDisbursement->create($data);

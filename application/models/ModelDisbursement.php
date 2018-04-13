@@ -1,6 +1,16 @@
 <?php
 	class ModelDisbursement extends CI_Model {
 
+		function cek_external_id($external_id){
+			$sql 	= "SELECT * FROM `pouch_disbursements` WHERE external_id = ?";
+			$query	= $this->db->query($sql,array($external_id));
+			if($query->num_rows()>0){
+				return "existed";
+			}else{
+				return "unexisted";
+			}
+		}
+
 		function cek_amount($company_id,$amount){
 			$sql 	= "SELECT company_balance FROM `pouch_mastercompanyaccount` WHERE company_id = ?";
 			$query	= $this->db->query($sql,array($company_id));
